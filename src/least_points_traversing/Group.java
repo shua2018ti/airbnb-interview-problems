@@ -1,4 +1,4 @@
-package LeastPointsTraversing;
+package least_points_traversing;
 
 import java.util.HashSet;
 

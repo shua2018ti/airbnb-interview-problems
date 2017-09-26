@@ -1,4 +1,4 @@
-package NightsRequest;
+package nights_request;
 
 /**
  * Created by naco_siren on 9/25/17.

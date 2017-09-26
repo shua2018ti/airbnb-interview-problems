@@ -1,4 +1,4 @@
-package LeastPointsTraversing;
+package least_points_traversing;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class Solution {
     public static void main(String[] args) {
-        /**
+        /*
          * Please forgive my poor graph presentation.
          *
          * -----------
@@ -74,6 +74,7 @@ public class Solution {
     }
 
     HashSet<Node> _nodes;
+
     /**
      * Constructor
      * @param nodes all the vertices in the graph
@@ -84,8 +85,10 @@ public class Solution {
 
     HashSet<Node> _candidates;
     LinkedList<Node> _results;
+
     /**
      * Main solution method
+     *
      * @return A list of nodes that can traverse the graph
      */
     public List<Node> solve() {
@@ -149,6 +152,7 @@ public class Solution {
 
                     /* Mark the node as processed */
                     processed.add(node);
+
                 } else {
 
                     /* Update an old entry iff. the old entry is another cluster */

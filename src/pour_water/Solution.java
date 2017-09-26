@@ -1,4 +1,4 @@
-package PourWater;
+package pour_water;
 
 import java.util.Random;
 
@@ -40,6 +40,7 @@ public class Solution {
         while (water > 0) {
             int pos = position;
 
+            /* 50% chance flow to left and 50% right */
             if (random.nextInt(2) == 0) {
                 while (pos > 0 && result[pos - 1] <= result[pos]) pos--;
             } else {
