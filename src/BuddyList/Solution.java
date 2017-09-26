@@ -1,11 +1,13 @@
+package BuddyList;
+
 import java.util.*;
 
 /**
  * Created by naco_siren on 9/24/17.
  */
-public class BuddyList {
+public class Solution {
     public static void main(String[] args) {
-        BuddyList solution = new BuddyList(new int[]{1, 2, 3, 4, 5},
+        Solution solution = new Solution(new int[]{1, 2, 3, 4, 5},
                 new int[][]{
                         new int[]{3, 4, 6, 8, 10}, // 2
                         new int[]{1, 2, 4, 5, 8}, // 4
@@ -26,7 +28,7 @@ public class BuddyList {
     HashSet<Integer> _myCities;
     ArrayList<Buddy> _buddies;
 
-    public BuddyList(int[] wishlist, int[][] buddies) {
+    public Solution(int[] wishlist, int[][] buddies) {
         this._myCities = list2set(wishlist);
 
         this._buddies = new ArrayList<>(buddies.length);

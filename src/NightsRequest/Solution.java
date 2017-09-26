@@ -1,7 +1,9 @@
+package NightsRequest;
+
 /**
  * Created by naco_siren on 9/25/17.
  */
-public class NightsRequest {
+public class Solution {
     public static void main(String[] args) {
         int r0 = maxNights(new int[]{2}); // [2]
         int r1 = maxNights(new int[]{1, 2, 3}); // [4]
