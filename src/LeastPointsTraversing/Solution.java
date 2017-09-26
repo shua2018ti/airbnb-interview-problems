@@ -74,7 +74,6 @@ public class Solution {
     }
 
     HashSet<Node> _nodes;
-
     /**
      * Constructor
      * @param nodes all the vertices in the graph
@@ -85,22 +84,26 @@ public class Solution {
 
     HashSet<Node> _candidates;
     LinkedList<Node> _results;
-
+    /**
+     * Main solution method
+     * @return A list of nodes that can traverse the graph
+     */
     public List<Node> solve() {
         /* Initialize the candidates and results */
         this._candidates = new HashSet<>(this._nodes);
         this._results = new LinkedList<>();
+        HashSet<Node> processed = new HashSet<>();
 
         /* Calculate the in-degrees of each node */
         HashMap<Node, Integer> inDegrees = new HashMap<>(_nodes.size());
-        for (Node node : _nodes) inDegrees.put(node, 0);
+        for (Node node : _nodes)
+            inDegrees.put(node, 0);
         for (Node node : _nodes)
             for (Node child : node.children)
                 inDegrees.put(child, inDegrees.get(child) + 1);
 
         /* Find all tree roots and add them into queue */
         LinkedList<Node> roots = new LinkedList<>();
-        HashSet<Node> removed = new HashSet<>();
         for (Node node : _nodes)
             if (inDegrees.get(node) == 0)
                 roots.add(node);
@@ -113,21 +116,20 @@ public class Solution {
             Node node = rmQueue.poll();
 
             for (Node child : node.children)
-                if (removed.contains(child) == false)
+                if (processed.contains(child) == false)
                     rmQueue.offer(child);
 
             _candidates.remove(node);
-            removed.add(node);
+            processed.add(node);
         }
 
         /* By now there should be only several connected components */
 
-        /* Group  */
+        /* Cluster candidates into groups */
         HashMap<Node, Group> groups = new HashMap<>(_candidates.size());
-
         for (Node cand : _candidates) {
-            if (removed.contains(cand))
-                continue;
+            /* Only process each node once */
+            if (processed.contains(cand)) continue;
 
             /* Collect each candidate's tree as a group by BFS */
             Group group = new Group(cand);
@@ -136,37 +138,36 @@ public class Solution {
             while (queue.isEmpty() == false) {
                 Node node = queue.poll();
 
-                /* Create a new entry or update an old entry */
                 if (groups.containsKey(node) == false) {
+                    /* Create a new entry */
                     group.add(node);
                     groups.put(node, group);
 
-                    /* BFS */
-                    for (Node child : node.children) queue.offer(child);
+                    /* Add children to queue for BFS */
+                    for (Node child : node.children)
+                        queue.offer(child);
 
-                    removed.add(node);
+                    /* Mark the node as processed */
+                    processed.add(node);
                 } else {
+
+                    /* Update an old entry iff. the old entry is another cluster */
                     Group oldGroup = groups.get(node);
                     if (oldGroup != group) {
                         oldGroup.union(group);
                         oldGroup.root = group.root;
                     }
                 }
-
             }
         }
 
         /* Collect the equivalent roots of all the groups */
         HashSet<Node> roots2 = new HashSet<>();
-        for (Group group : groups.values()) {
+        for (Group group : groups.values())
             if (roots2.contains(group.root) == false)
                 roots2.add(group.root);
-        }
         _results.addAll(roots2);
 
         return _results;
     }
-
-
-
 }
