@@ -5,12 +5,12 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  * Created by naco_siren on 9/26/17.
  */
-public class Game {
+public class GameController {
     private int[] nums;
     private int x;
     private int y;
 
-    public Game() {
+    public GameController() {
         /* Set the numbers */
         this.nums = new int[9];
         for (int i = 0; i < 3; i++) {
@@ -25,7 +25,7 @@ public class Game {
         x = 2; y = 2;
     }
 
-    public Game(boolean shuffle) {
+    public GameController(boolean shuffle) {
         this();
         if (!shuffle) return;
 

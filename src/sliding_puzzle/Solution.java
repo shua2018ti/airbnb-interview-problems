@@ -6,19 +6,20 @@ package sliding_puzzle;
 public class Solution {
     public static void main(String[] args) {
 
-        Game game = new Game(true);
+        GameController game = new GameController(true);
 
 
         return;
     }
 
-    private Game game;
-    public Solution(Game game) {
+    private GameController game;
+    public Solution(GameController game) {
         this.game = game;
     }
 
+//    TODO: TO BE SURVEYED! Use the reverse pairs' count to judge whether a game is solvable
 //    public boolean isSolvable() {
-//        // TODO: TO BE SURVEYED
+//
 //    }
 
 }
