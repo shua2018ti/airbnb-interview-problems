@@ -41,7 +41,7 @@ public class PyramidTransition {
     }
 
     private Set<Character> rightfulHeirs;
-    private Map<Character, Map<Character, Set<Character>>> transitionDict;
+    private Map<Character, Map<Character, Set<Character>>> mutationDict;
     private Map<String, Boolean> cache;
 
     public PyramidTransition(String[] lines, String heirs) {
@@ -51,20 +51,20 @@ public class PyramidTransition {
             rightfulHeirs.add(heirs.charAt(i));
 
         /* Initialize the transition dictionary */
-        transitionDict = new HashMap<>();
+        mutationDict = new HashMap<>();
         for (String line : lines) {
             String[] parts = line.split(",");
             char father = parts[0].charAt(0), mother = parts[1].charAt(0);
 
             /* Prepare left */
-            if (!transitionDict.containsKey(father))
-                transitionDict.put(father, new HashMap<>());
+            if (!mutationDict.containsKey(father))
+                mutationDict.put(father, new HashMap<>());
 
             /* Prepare right (nested HashMap) */
             Set<Character> sons = new HashSet<>();
             for (int i = 0; i < parts[2].length(); i++)
                 sons.add(parts[2].charAt(i));
-            transitionDict.get(father).put(mother, sons);
+            mutationDict.get(father).put(mother, sons);
         }
 
         /* Initialize the cache */
@@ -86,11 +86,10 @@ public class PyramidTransition {
         }
 
         /* If still not top, perform a BFS */
-        List<String> nextGeneration = new ArrayList<>();
-        breedNextGen(nextGeneration, input, 0, new StringBuilder());
-
-        for (String nextInput : nextGeneration) {
-            if (checkInput(nextInput)) {
+        List<String> nextGeneration = breedNextGen(input);
+        for (String child : nextGeneration) {
+            /* If a top child is rightful, all the layers' parents are cached here */
+            if (checkInput(child)) {
                 cache.put(input, true);
                 return true;
             }
@@ -104,19 +103,22 @@ public class PyramidTransition {
     /**
      * Use the parents to breed next generations
      */
-    private void breedNextGen(List<String> res, String input, int start, StringBuilder sb) {
-        if (start == input.length() - 1) {
-            res.add(sb.toString());
-            return;
+    private List<String> breedNextGen(String input) {
+        int count = input.length();
+
+        /* Perform multiplications */
+        ArrayList<String> children = new ArrayList<>();
+        children.add("");
+        for (int i = 0; i < count - 1; i++) {
+            ArrayList<String> newChildren = new ArrayList<>();
+            for (String child : children) {
+                for (Character individual : mutationDict.get(input.charAt(i)).get(input.charAt(i+1)))
+                    newChildren.add(child + individual);
+            }
+            children = newChildren;
         }
 
-        char left = input.charAt(start), right = input.charAt(start + 1);
-
-        for (char c : transitionDict.get(left).get(right)) {
-            sb.append(c);
-            breedNextGen(res, input, start + 1, sb);
-            sb.setLength(sb.length() - 1);
-        }
+        return children;
     }
 }
 
