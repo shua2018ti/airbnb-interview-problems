@@ -10,14 +10,14 @@ package sliding_puzzle;
 
 import java.util.*;
 
-public class EightPuzzle {
+public class SlidingPuzzle {
     public static void main(String[] args) {
         int[][] matrix = {
                 {3, 1, 4},
                 {6, 2, 0},
                 {7, 5, 8}
         };
-        EightPuzzle ep = new EightPuzzle(matrix);
+        SlidingPuzzle ep = new SlidingPuzzle(matrix);
         boolean r1 = ep.isSolvable();
         List<String> r2 = ep.getSolution();
 
@@ -26,7 +26,7 @@ public class EightPuzzle {
 
     private static final int[][] DIRS = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
     private static final String[] PATH_WORDS = { "Down", "Right", "Up", "Left" };
-    private static final String FINAL_STATE = "0,1,2,3,4,5,6,7,8,";
+    private static final String FINAL_STATE = "1,2,3,4,5,6,7,8,0,";
 
     /* The matrix */
     private int[][] matrix;
@@ -40,7 +40,7 @@ public class EightPuzzle {
     /**
      * Constructor
      */
-    public EightPuzzle(int[][] matrix) {
+    public SlidingPuzzle(int[][] matrix) {
         this.matrix = matrix;
         this.m = matrix.length;
         this.n = matrix[0].length;
@@ -191,11 +191,9 @@ public class EightPuzzle {
      */
     private String encodeIntoString(int[][] matrix) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
                 sb.append(matrix[i][j]).append(",");
-            }
-        }
         return sb.toString();
     }
 
