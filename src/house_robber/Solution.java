@@ -13,6 +13,9 @@ public class Solution {
         return;
     }
 
+    /**
+     * Houses are arranged in a row
+     */
     public static int rob(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         if (nums.length == 1) return nums[0];
@@ -27,6 +30,9 @@ public class Solution {
         return last;
     }
 
+    /**
+     * Houses are arranged in a circle!
+     */
     public static int rob2(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         if (nums.length == 1) return nums[0];

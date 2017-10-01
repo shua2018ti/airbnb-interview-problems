@@ -95,7 +95,7 @@ public class Solution {
         /* Initialize the candidates and results */
         this._candidates = new HashSet<>(this._nodes);
         this._results = new LinkedList<>();
-        HashSet<Node> processed = new HashSet<>();
+        HashSet<Node> visited = new HashSet<>();
 
         /* Calculate the in-degrees of each node */
         HashMap<Node, Integer> inDegrees = new HashMap<>(_nodes.size());
@@ -119,11 +119,11 @@ public class Solution {
             Node node = rmQueue.poll();
 
             for (Node child : node.children)
-                if (processed.contains(child) == false)
+                if (visited.contains(child) == false)
                     rmQueue.offer(child);
 
             _candidates.remove(node);
-            processed.add(node);
+            visited.add(node);
         }
 
         /* By now there should be only several connected components */
@@ -131,8 +131,8 @@ public class Solution {
         /* Cluster candidates into groups */
         HashMap<Node, Group> groups = new HashMap<>(_candidates.size());
         for (Node cand : _candidates) {
-            /* Only process each node once */
-            if (processed.contains(cand)) continue;
+            /* Only visit each node once */
+            if (visited.contains(cand)) continue;
 
             /* Collect each candidate's tree as a group by BFS */
             Group group = new Group(cand);
@@ -151,7 +151,7 @@ public class Solution {
                         queue.offer(child);
 
                     /* Mark the node as processed */
-                    processed.add(node);
+                    visited.add(node);
 
                 } else {
 

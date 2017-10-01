@@ -80,11 +80,12 @@ public class EightPuzzle {
                 if (curMatrixString.equals(FINAL_STATE))
                     return true;
 
-                /* Retrieve blank's position */
+                /* Retrieve the matrix and blank's position */
+                int[][] curMatrix = decodeFromString(curMatrixString);
                 int[] curElement = blankQueue.poll();
                 int x = curElement[0], y = curElement[1];
 
-                /* Search towards four directions */
+                /* Search in four directions */
                 for (int k = 0; k < DIRS.length; k++) {
                     /* Check if new blank's position is legal */
                     int xx = x + DIRS[k][0], yy = y + DIRS[k][1];
@@ -92,7 +93,7 @@ public class EightPuzzle {
                         continue;
 
                     /* Clone a new matrix and swap the elements on old and new blanks */
-                    int[][] newMatrix = decodeFromString(curMatrixString).clone();
+                    int[][] newMatrix = curMatrix.clone();
                     int temp = newMatrix[x][y];
                     newMatrix[x][y] = newMatrix[xx][yy];
                     newMatrix[xx][yy] = temp;

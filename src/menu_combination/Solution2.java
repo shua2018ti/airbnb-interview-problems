@@ -49,9 +49,10 @@ public class Solution2 {
                 if (Math.abs(budget - s) < 0.0000001) {
                     results.add(new LinkedList<>(cand));
 
-                    /* Update */
+                    /* Update and adjust index */
                     candidates.remove(j);
                     sums.remove(j);
+                    j--; size--;
 
                 } else if (budget - s > 0.0000001) {
                     /* Add current price into the candidate */

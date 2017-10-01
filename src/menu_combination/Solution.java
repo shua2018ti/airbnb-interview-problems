@@ -23,6 +23,8 @@ public class Solution {
     public Solution(double[] prices) {
         this.count = prices.length;
         this.prices = prices;
+
+        /* Sort the prices for better pruning */
         Arrays.sort(this.prices);
 
         this.cents = new long[count];
@@ -46,15 +48,15 @@ public class Solution {
             return;
         }
 
-        if (index == count || cents[index] > budget) {
+        /* Prune if all the prices have been considered, or the current price exceeds the remaining budget */
+        if (index == count || cents[index] > budget)
             return;
-        }
 
-        /* Select current price */
+        /* Option 1: Select current price */
         prefix.add(prices[index]);
         dfs(index + 1, budget - cents[index], prefix, results);
 
-        /* Do not select current price */
+        /* Option 2: Do not select current price */
         prefix.removeLast();
         dfs(index + 1, budget, prefix, results);
     }
