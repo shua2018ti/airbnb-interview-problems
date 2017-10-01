@@ -1,5 +1,7 @@
 package house_robber;
 
+import java.util.LinkedList;
+
 /**
  * Created by naco_siren on 9/29/17.
  */
@@ -21,12 +23,22 @@ public class Solution {
         if (nums.length == 1) return nums[0];
 
         int prev = 0, last = 0;
+        LinkedList<Integer> prevList = new LinkedList<>(), lastList = new LinkedList<>();
         for (int i = 0; i < nums.length; i++) {
+            /* Rob it! */
+            prevList.addLast(i);
             int cur = Math.max(prev + nums[i], last);
 
+            /* Update lists and max records */
+            LinkedList<Integer> temp = prevList;
+
             prev = last;
+            prevList = lastList;
+
             last = cur;
+            lastList = temp;
         }
+
         return last;
     }
 
