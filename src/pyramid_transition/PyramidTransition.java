@@ -107,15 +107,15 @@ public class PyramidTransition {
         int count = input.length();
 
         /* Perform multiplications */
-        ArrayList<String> children = new ArrayList<>();
-        children.add("");
+        LinkedList<String> children = new LinkedList<>();
+        children.offer("");
         for (int i = 0; i < count - 1; i++) {
-            ArrayList<String> newChildren = new ArrayList<>();
-            for (String child : children) {
+            int size = children.size();
+            for (int j = 0; j < size; j++) {
+                String child = children.poll();
                 for (Character individual : mutationDict.get(input.charAt(i)).get(input.charAt(i+1)))
-                    newChildren.add(child + individual);
+                    children.offer(child + individual);
             }
-            children = newChildren;
         }
 
         return children;
