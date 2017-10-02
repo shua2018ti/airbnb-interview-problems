@@ -62,6 +62,12 @@ public class Solution2 {
                     /* Update */
                     candidates.add(newCand);
                     sums.add(s + prices[i]);
+
+                } else if (s - budget > 0.0000001) {
+                    /* Update and adjust index */
+                    candidates.remove(j);
+                    sums.remove(j);
+                    j--; size--;
                 }
             }
         }
